@@ -1,4 +1,5 @@
 require "ffi"
+require "os"
 
 def sys(cmd)
   puts "#{cmd}"
@@ -15,7 +16,7 @@ task :compile_shared do
     " -Wpointer-arith -Wredundant-decls -Wstrict-prototypes -Wswitch-enum"\
     " -Wno-type-limits"
 
-  cpuflag = if RUBY_PLATFORM =~ /arm64/ && RUBY_PLATFORM =~ /darwin/
+  cpuflag = if OS.host_cpu == "arm64" && OS.mac?
               "-mcpu=apple-m1"
             else
               "-march=native"
